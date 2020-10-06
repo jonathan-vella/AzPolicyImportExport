@@ -1,0 +1,48 @@
+{
+ "properties": {
+  "displayName": "Tag Resource Groups used for Demos",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "category": "Tags",
+   "createdBy": "ff59d9e4-9df8-4ae6-90e3-b837e2f6651b",
+   "createdOn": "2020-07-06T14:22:43.2043491Z",
+   "updatedBy": "ff59d9e4-9df8-4ae6-90e3-b837e2f6651b",
+   "updatedOn": "2020-07-07T08:03:43.5152744Z"
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Resources/subscriptions/resourceGroups"
+     },
+     {
+      "field": "name",
+      "like": "demo-*"
+     }
+    ]
+   },
+   "then": {
+    "effect": "modify",
+    "details": {
+     "roleDefinitionIds": [
+      "/providers/Microsoft.Authorization/roleDefinitions/b24988ac-6180-42a0-ab88-20f7382dd24c",
+      "/providers/Microsoft.Authorization/roleDefinitions/4a9ae827-6dc8-4573-8ac7-8239d42aa03f"
+     ],
+     "operations": [
+      {
+       "operation": "addOrReplace",
+       "field": "tags['environment']",
+       "value": "ilc-Demos"
+      }
+     ]
+    }
+   }
+  }
+ },
+ "id": "/subscriptions/1a4dee4d-78d9-4ec1-b2d7-3c168d5c2cd3/providers/Microsoft.Authorization/policyDefinitions/bcfb693e-6f1c-4167-869b-3d4b04d2fab5",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "bcfb693e-6f1c-4167-869b-3d4b04d2fab5"
+}

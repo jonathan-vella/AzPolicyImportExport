@@ -1,0 +1,73 @@
+{
+ "properties": {
+  "displayName": "Audit Resources for Specific Tags",
+  "policyType": "Custom",
+  "mode": "Indexed",
+  "description": "What environment does each resource belongs to?\nWhat is the name of the application that is supported by the resource?\nWho is the technical contact for each resource?\nDoes this resource have a maintenance window?\nWho should be charged for the cost associated with this resource?\nAre there any regulatory obligations for this resource (PCI, ISO 27001, etc. )",
+  "metadata": {
+   "category": "Tags",
+   "createdBy": "ff59d9e4-9df8-4ae6-90e3-b837e2f6651b",
+   "createdOn": "2020-09-04T06:06:07.1986192Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "tagName1": {
+    "type": "String",
+    "metadata": {
+     "displayName": "First Tag Name",
+     "description": "Name of the tag, such as 'Environment'"
+    }
+   },
+   "tagName2": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Second Tag Name",
+     "description": "Name of the tag, such as 'App'"
+    }
+   },
+   "tagName3": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Third Tag Name",
+     "description": "Name of the tag, such as 'techContact'"
+    }
+   },
+   "tagName4": {
+    "type": "String",
+    "metadata": {
+     "displayName": "Forth Tag Name",
+     "description": "Name of the tag, such as 'MaintWindow'"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "anyOf": [
+     {
+      "field": "[concat('tags[', parameters('tagName1'), ']')]",
+      "exists": "false"
+     },
+     {
+      "field": "[concat('tags[', parameters('tagName2'), ']')]",
+      "exists": "false"
+     },
+     {
+      "field": "[concat('tags[', parameters('tagName3'), ']')]",
+      "exists": "false"
+     },
+     {
+      "field": "[concat('tags[', parameters('tagName4'), ']')]",
+      "exists": "false"
+     }
+    ]
+   },
+   "then": {
+    "effect": "audit"
+   }
+  }
+ },
+ "id": "/subscriptions/1a4dee4d-78d9-4ec1-b2d7-3c168d5c2cd3/providers/Microsoft.Authorization/policyDefinitions/d11acecd-7e84-429c-b3ee-d66b3c99a0cb",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "d11acecd-7e84-429c-b3ee-d66b3c99a0cb"
+}

@@ -1,0 +1,76 @@
+{
+ "properties": {
+  "displayName": "Deny Inbound Remote Admin from Internet",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "category": "Network",
+   "createdBy": "ff59d9e4-9df8-4ae6-90e3-b837e2f6651b",
+   "createdOn": "2020-06-23T10:31:12.7592735Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {
+   "deniedPorts": {
+    "type": "Array",
+    "metadata": {
+     "displayName": "Ports to block",
+     "description": "The inbound ports that should be blocked"
+    }
+   }
+  },
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Network/networkSecurityGroups/securityRules"
+     },
+     {
+      "allOf": [
+       {
+        "field": "Microsoft.Network/networkSecurityGroups/securityRules/access",
+        "equals": "Allow"
+       },
+       {
+        "field": "Microsoft.Network/networkSecurityGroups/securityRules/direction",
+        "equals": "Inbound"
+       },
+       {
+        "anyOf": [
+         {
+          "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRange",
+          "in": "[parameters('deniedPorts')]"
+         },
+         {
+          "not": {
+           "field": "Microsoft.Network/networkSecurityGroups/securityRules/destinationPortRanges[*]",
+           "notIn": "[parameters('deniedPorts')]"
+          }
+         }
+        ]
+       },
+       {
+        "anyOf": [
+         {
+          "field": "Microsoft.Network/networkSecurityGroups/securityRules/sourceAddressPrefix",
+          "in": [
+           "*",
+           "Internet"
+          ]
+         }
+        ]
+       }
+      ]
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/1a4dee4d-78d9-4ec1-b2d7-3c168d5c2cd3/providers/Microsoft.Authorization/policyDefinitions/9ed35b7b-3b14-4542-93ad-7b9b1e4c1d2c",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "9ed35b7b-3b14-4542-93ad-7b9b1e4c1d2c"
+}
