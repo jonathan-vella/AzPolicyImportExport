@@ -1,0 +1,35 @@
+{
+ "properties": {
+  "displayName": "Allow only 10.4.X.X vNet creation",
+  "policyType": "Custom",
+  "mode": "All",
+  "metadata": {
+   "category": "Network",
+   "createdBy": "ff59d9e4-9df8-4ae6-90e3-b837e2f6651b",
+   "createdOn": "2020-10-26T15:13:41.0472686Z",
+   "updatedBy": null,
+   "updatedOn": null
+  },
+  "parameters": {},
+  "policyRule": {
+   "if": {
+    "allOf": [
+     {
+      "field": "type",
+      "equals": "Microsoft.Network/virtualNetworks"
+     },
+     {
+      "field": "Microsoft.Network/virtualNetworks/addressSpace.addressPrefixes[*]",
+      "notContains": "10.4."
+     }
+    ]
+   },
+   "then": {
+    "effect": "deny"
+   }
+  }
+ },
+ "id": "/subscriptions/1a4dee4d-78d9-4ec1-b2d7-3c168d5c2cd3/providers/Microsoft.Authorization/policyDefinitions/845ecfd0-7b13-4c58-b515-439c8327f2ab",
+ "type": "Microsoft.Authorization/policyDefinitions",
+ "name": "845ecfd0-7b13-4c58-b515-439c8327f2ab"
+}
